@@ -7,23 +7,90 @@ Created on Sun Feb 21 17:33:00 2016
 
 def rotate (str_input):
     
-    str_rotated = "str_rotated"
+    end_digit = str_input[5:6]
+    first_5_digits = str_input[:5]
+#    print ('end_digit=', end_digit)
+#    print ('first_5_digits=', first_5_digits)
+
+    str_rotated = end_digit+first_5_digits
+#    print ('str_rotated=', str_rotated)
+
     return str_rotated
 
 def is_transpose (string1, string2):
+    response = False
+    count = 1
 
-    response = True
-    
+    while response == False:
+
+        if string1 == string2:
+            response = True
+            
+            break
+
+        else:
+            
+            if count < 6:    
+        
+                string2 = rotate(string2)
+                count = count + 1
+            else:#not transposable
+                break
+
+
     return response
 
 def get_transposability (input_number):
-    print('get_transposability')
+    check_transpose = False
+    
+    string_1 = str(input_number)
+       
+#    print ('string_1=', string_1)
+    
+    for i in range(2, 10):
+        string_2 = input_number * i
+
+        if string_2 > 1000000:
+            continue
+
+        string_2 = str(string_2)
+
+#        print ('string_2=', string_2)
+            
+        check_transpose = is_transpose(string_1, string_2)
+        
+        if check_transpose == True:
+            print (string_1 + " * " + str(i) + " = " + string_2)            
+            
     return
 
 def get_transposability_zero (input_number):
-    print('get_transposability_zero')
+#    print('get_transposability_zero')
+    check_transpose = False
     
-    return
+    string_1 = str(input_number)
+    string_1 = "0"+string_1
+       
+#    print ('string_1=', string_1)
+    
+    for i in range(2, 10):
+        string_2 = input_number * i
+
+        if string_2 < 100000:
+            string_2 = "0"+str(string_2)
+        elif string_2 > 1000000:
+            continue
+        else:
+            string_2 = str(string_2)
+
+#        print ('string_2=', string_2)
+            
+        check_transpose = is_transpose(string_1, string_2)
+        
+        if check_transpose == True:
+            print (string_1 + " * " + str(i) + " = " + string_2)            
+            
+    return 
     
 def open_file ():
 
@@ -65,16 +132,14 @@ def process_file ():
         print ("Range Start =", range_start)
         print ("Range End =", range_end)
     
-    for i in (10, 20):
-#    for i in (range_start, range_end+1):
+    for i in range(range_start, range_end+1):
         
-        print ('i=', i)
         
-#        if i < 100000:# if less than 5 digits
-#            get_transposability_zero(i)
-#            
-#        else:
-#            get_transposability(i)
+        if i < 100000:# if less than 5 digits
+            get_transposability_zero(i)
+            
+        else:
+            get_transposability(i)
             
     return 
 
